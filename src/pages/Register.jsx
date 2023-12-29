@@ -4,7 +4,7 @@ import { useAuthContext } from "../context/AuthContext";
 
 const Register = () => {
   //* consuming context
-  const { createUser } = useAuthContext();
+  const { createUser, signUpProvider } = useAuthContext();
   //* ayrı stateler
   // const [firstName, setFirstName] = useState();
   // const [lastName, setLastName] = useState();
@@ -88,6 +88,7 @@ const Register = () => {
             <button
               className="flex justify-between text-center items-center btn-danger"
               type="button"
+              onClick={signUpProvider}
             >
               Continue with Google
               <GoogleIcon color="currentColor" />
