@@ -2,14 +2,15 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import avatar from "../assets/icons/avatar.png";
+import Switch from "./Switch";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
-  // const currentUser = { displayName: "felix franko" };
-  const currentUser = false;
+  const currentUser = { displayName: "bahar köse" };
+  // const currentUser = false;
   return (
     <>
       <Disclosure
@@ -27,6 +28,7 @@ export default function Navbar() {
               {currentUser && (
                 <h5 className="mr-2 capitalize">{currentUser?.displayName} </h5>
               )}
+              <Switch />
               {/* Profile dropdown */}
               <Menu as="div" className="relative ml-3">
                 <div>

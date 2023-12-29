@@ -8,7 +8,9 @@ import Navbar from "../components/Navbar";
 
 const AppRouter = () => {
   return (
-    <BrowserRouter>
+    // useNavigate hookunu kullanabilmek için index.js'e taşıdık
+    // <BrowserRouter>
+    <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Main />} />
@@ -16,7 +18,8 @@ const AppRouter = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/details/:id" element={<MovieDetail />} />
       </Routes>
-    </BrowserRouter>
+    </>
+    // </BrowserRouter>
   );
 };
 
