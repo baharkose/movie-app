@@ -89,6 +89,7 @@ const AuthContextProvider = ({ children }) => {
         // User is signed out
         setCurrentUser(false);
         // - logoutta setCurrentuserı false yaptık. 
+        console.log(currentUser)
         
         sessionStorage.removeItem("user");
       }
