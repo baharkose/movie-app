@@ -78,6 +78,8 @@ const AuthContextProvider = ({ children }) => {
       if (user) {
         console.log(user);
         const { email, displayName, photoURL } = user;
+        //- userın içinden ihtiyacımız olanları aldık. 
+        //- navbarda kendi oluşturduğumu zyerine bşaka otomatik geleni çektik. 
         setCurrentUser({ email, displayName, photoURL });
         sessionStorage.setItem(
           "user",
@@ -86,6 +88,8 @@ const AuthContextProvider = ({ children }) => {
       } else {
         // User is signed out
         setCurrentUser(false);
+        // - logoutta setCurrentuserı false yaptık. 
+        
         sessionStorage.removeItem("user");
       }
     });
@@ -102,6 +106,7 @@ const AuthContextProvider = ({ children }) => {
   //! Google ile girişi enable yap
   //* => Authentication => settings => Authorized domains => add domain
   //! Projeyi deploy ettikten sonra google sign-in çalışması için domain listesine deploy linkini ekle
+  // - gmaille giriş
   const signUpProvider = () => {
     //? Google ile giriş yapılması için kullanılan firebase metodu
     const provider = new GoogleAuthProvider();

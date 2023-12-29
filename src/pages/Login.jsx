@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   //* consuming context
-  const { signIn } = useAuthContext();
+  const { signIn, signUpProvider } = useAuthContext();
   //* ayrı stateler
   // const [email, setEmail] = useState();
   // const [password, setPassword] = useState();
@@ -19,7 +19,7 @@ const Login = () => {
   const handleChange = (e) =>
     setInfo({ ...info, [e.target.name]: e.target.value });
 
-    //- submit olduğunda email ve passwordu gönder
+  //- submit olduğunda email ve passwordu gönder
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = info;
@@ -73,6 +73,7 @@ const Login = () => {
             <button
               className="flex justify-between text-center items-center btn-danger"
               type="button"
+              onClick={signUpProvider}
             >
               Continue with Google
               <GoogleIcon color="currentColor" />

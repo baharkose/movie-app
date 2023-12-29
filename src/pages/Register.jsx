@@ -24,8 +24,10 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = info;
-    createUser(email, password);
+    const { email, password, firstName, lastName } = info;
+    //- giriş yaptıktan sonra ekranda kullanıcı adının vs. görünmesi için
+    const displayName = `${firstName} ${lastName}`
+    createUser(email, password, displayName);
   };
 
   return (

@@ -10,10 +10,13 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const currentUser = { displayName: "bahar köse" };
+  // const currentUser = { displayName: "bahar köse" };
+  // //- kendi olşturduğumuz yerine autcontexten geleni aldık. 
   // const currentUser = false;
-  const {logOut} =useAuthContext()
+  const {logOut, currentUser} =useAuthContext()
   //- logouta tıklandığında çıkış fonksyionunu çağır. 
+  // - current usera göre displaynamei gösterme
+  // - şimdi update profile işlemini görelim
   return (
     <>
       <Disclosure
