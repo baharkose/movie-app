@@ -3,6 +3,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import avatar from "../assets/icons/avatar.png";
 import Switch from "./Switch";
+import { useAuthContext } from "../context/AuthContext";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -11,6 +12,8 @@ function classNames(...classes) {
 export default function Navbar() {
   const currentUser = { displayName: "bahar köse" };
   // const currentUser = false;
+  const {logOut} =useAuthContext()
+  //- logouta tıklandığında çıkış fonksyionunu çağır. 
   return (
     <>
       <Disclosure
@@ -92,6 +95,7 @@ export default function Navbar() {
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
                             )}
+                            onClick={logOut}
                           >
                             Logout
                           </span>
