@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   //* consuming context
-  const { signIn, signUpProvider } = useAuthContext();
+  const { signIn, signUpProvider, forgotPassword } = useAuthContext();
   //* ayrı stateler
   // const [email, setEmail] = useState();
   // const [password, setPassword] = useState();
@@ -57,7 +57,8 @@ const Login = () => {
               <label htmlFor="floating_password">Password</label>
             </div>
             <div className="flex justify-between">
-              <span className="py-3 font-[0.75em] cursor-pointer decoration-none text-gray-500 hover:text-[#ff4b45]">
+              <span className="py-3 font-[0.75em] cursor-pointer decoration-none text-gray-500 hover:text-[#ff4b45]"
+              onClick={()=>forgotPassword(info.email)}>
                 Forgot Password
               </span>
               <Link
