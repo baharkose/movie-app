@@ -27,9 +27,7 @@ const AuthContextProvider = ({ children }) => {
   );
   const navigate = useNavigate();
 
-  useEffect(() => {
-    userObserver();
-  }, []);
+  userObserver();
 
   const createUser = async (email, password, displayName) => {
     try {
@@ -78,8 +76,8 @@ const AuthContextProvider = ({ children }) => {
       if (user) {
         console.log(user);
         const { email, displayName, photoURL } = user;
-        //- userın içinden ihtiyacımız olanları aldık. 
-        //- navbarda kendi oluşturduğumu zyerine bşaka otomatik geleni çektik. 
+        //- userın içinden ihtiyacımız olanları aldık.
+        //- navbarda kendi oluşturduğumu zyerine bşaka otomatik geleni çektik.
         setCurrentUser({ email, displayName, photoURL });
         sessionStorage.setItem(
           "user",
@@ -88,9 +86,9 @@ const AuthContextProvider = ({ children }) => {
       } else {
         // User is signed out
         setCurrentUser(false);
-        // - logoutta setCurrentuserı false yaptık. 
-        console.log(currentUser)
-        
+        // - logoutta setCurrentuserı false yaptık.
+        console.log(currentUser);
+
         sessionStorage.removeItem("user");
       }
     });
