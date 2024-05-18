@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { auth } from "../auth/firebase";
 import {
   GoogleAuthProvider,
@@ -26,8 +26,9 @@ const AuthContextProvider = ({ children }) => {
     JSON.parse(sessionStorage.getItem("user"))
   );
   const navigate = useNavigate();
-
-  userObserver();
+  useEffect(() => {
+    userObserver();
+  }, []);
 
   const createUser = async (email, password, displayName) => {
     try {
