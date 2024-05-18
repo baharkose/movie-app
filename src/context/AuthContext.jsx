@@ -1,5 +1,3 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { auth } from "../auth/firebase";
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -10,79 +8,84 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import { createContext, useContext, useEffect, useState } from "react";
+import { auth } from "../auth/firebase";
 import { useNavigate } from "react-router-dom";
-import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
-
 export const AuthContext = createContext();
-
-export const useAuthContext = () => useContext(AuthContext);
-
+export const useAuthContext = () => {
+  return useContext(AuthContext);
+};
 const AuthContextProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem("user")));
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(sessionStorage.getItem("user"))
+  );
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+  const createUser = async (email, password, displayName) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      await updateProfile(auth.currentUser, {
+        displayName: displayName,
+      });
+      navigate("/");
+    } catch (error) {
+      console.log(error)
+    }
+  };
+  const signIn = async (email, password) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      navigate("/");
+     
+    } catch (error) {
+     console.log(error)
+    }
+  };
+  const userObserver = () => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         const { email, displayName, photoURL } = user;
         setCurrentUser({ email, displayName, photoURL });
-        sessionStorage.setItem("user", JSON.stringify({ email, displayName, photoURL }));
+        sessionStorage.setItem(
+          "user",
+          JSON.stringify({ email, displayName, photoURL })
+        );
       } else {
-        setCurrentUser(null);
+        setCurrentUser(false);
         sessionStorage.removeItem("user");
       }
     });
-    return () => unsubscribe(); // Clean up subscription on unmount
-  }, []);
-
-  const handleUserAuth = async (email, password, displayName = '', update = false) => {
-    try {
-      const userCredential = await (update ?
-        signInWithEmailAndPassword(auth, email, password) :
-        createUserWithEmailAndPassword(auth, email, password));
-      
-      if (displayName) {
-        await updateProfile(auth.currentUser, { displayName });
-      }
-      navigate("/");
-      toastSuccessNotify(update ? "Logged in successfully!" : "Registered successfully!");
-    } catch (error) {
-      console.log(error);
-      toastErrorNotify(error.message);
-    }
   };
-
-  const logOut = () => {
-    signOut(auth).then(() => {
-      toastSuccessNotify("Logged out successfully");
-    });
-  };
-
   const signUpProvider = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
-      .then(() => {
+      .then((result) => {
         navigate("/");
-        toastSuccessNotify("Logged in successfully");
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
+  const logOut = () => {
+    signOut(auth);
+  };
   const forgotPassword = (email) => {
     sendPasswordResetEmail(auth, email)
-      .then(() => {
-        toastSuccessNotify("Please check your email");
-      })
-      .catch((error) => {
-        toastErrorNotify(error.message);
-      });
+      
   };
-
+  useEffect(() => {
+    userObserver();
+  }, []);
   const values = {
-    createUser: (email, password, displayName) => handleUserAuth(email, password, displayName, false),
-    signIn: (email, password) => handleUserAuth(email, password, '', true),
+    createUser,
+    signIn,
     logOut,
     currentUser,
     signUpProvider,
